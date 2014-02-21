@@ -9,41 +9,21 @@ module Convert
   end
 
   class WholePart
-    ONES_GROUP = {
-      0 => "zero",
-      1 => "one",
-      2 => "two",
-      3 => "three",
-      4 => "four",
-      5 => "five",
-      6 => "six",
-      7 => "seven",
-      8 => "eight",
-      9 => "nine"
-    }
-
-    TEENS_GROUP = {
-      1 => "eleven",
-      2 => "twelve",
-      3 => "thirteen",
-      4 => "fourteen",
-      5 => "fifteen",
-      6 => "sixteen",
-      7 => "seventeen",
-      8 => "eighteen",
-      9 => "nineteen"
-    }
-
-    TENS_GROUP = {
-      1 => "ten",
-      2 => "twenty",
-      3 => "thirty",
-      4 => "forty",
-      5 => "fifty",
-      6 => "sixty",
-      7 => "seventy",
-      8 => "eighty",
-      9 => "ninety"
+    AS_ONE = 0
+    AS_TEEN = 1
+    AS_TEN = 2
+    
+    WORD_FOR = {
+      0 => ['zero', nil, nil],
+      1 => ['one', 'eleven', 'ten'],
+      2 => ['two', 'twelve', 'twenty'],
+      3 => ['three', 'thirteen', 'thirty'],
+      4 => ['four', 'fourteen', 'forty'],
+      5 => ['five', 'fifteen', 'fifty'],
+      6 => ['six', 'sixteen', 'sixty'],
+      7 => ['seven', 'seventeen', 'seventy'],
+      8 => ['eight', 'eighteen', 'eighty'],
+      9 => ['nine', 'nineteen', 'ninety']
     }
         
     def initialize full_amount
@@ -53,25 +33,36 @@ module Convert
 
     def word
       result = ''
-      hundreds = (@whole / 100)
+      thousands = (@whole / 1000)
+      tens = thousands / 10
+      ones = thousands % 10
+      result = result.concat("#{word_decide tens, ones} thousand ") unless thousands == 0
+      remainder = @whole % 1000
+      hundreds = (remainder / 100)
       result = result.concat("#{word_decide 0, hundreds} hundred ") unless hundreds == 0
       remainder = @whole % 100
       tens = (remainder / 10)
       ones = (remainder % 10)
-      return result.concat word_decide(tens, ones)
+      tens_ones = word_decide(tens, ones)
+      if tens_ones == 'zero'
+        result = tens_ones if result.empty?
+      else
+        result = result.concat tens_ones
+      end
+      result.strip
     end
 
     def word_decide tens, ones
       if tens == 0
-        return ONES_GROUP[ones]
+        return WORD_FOR[ones][AS_ONE]
       end
       if ones == 0
-        return TENS_GROUP[tens]
+        return WORD_FOR[tens][AS_TEN]
       end
       if tens == 1 && ones > 0
-        return TEENS_GROUP[ones]
+        return WORD_FOR[ones][AS_TEEN]
       end
-      return "#{TENS_GROUP[tens]}-#{ONES_GROUP[ones]}"
+      return "#{WORD_FOR[tens][AS_TEN]}-#{WORD_FOR[ones][AS_ONE]}"
     end
   end
 

@@ -73,8 +73,13 @@ module Convert
       end
 
       it "returns 'hundreds'" do
+        (WholePart.new '100.00').word.should eq 'one hundred'        
         (WholePart.new '101.00').word.should eq 'one hundred one'
         (WholePart.new '113.00').word.should eq 'one hundred thirteen'
+      end
+
+      it "returns 'thousands'" do
+        (WholePart.new '1000.00').word.should eq 'one thousand'
       end
     end
   end

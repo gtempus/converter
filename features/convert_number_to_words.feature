@@ -52,5 +52,6 @@ Feature: Convert number to words
     Then the output should contain exactly "<String Representation>"
 
     Examples:
-      | Amount  | String Representation           |
-      | 1000.00 | One thousand and 00/100 dollars |     
+      | Amount   | String Representation                                          |
+      |  1000.00 | One thousand and 00/100 dollars                                |
+      | 65289.99 | Sixty-five thousand two hundred eighty-nine and 99/100 dollars |
