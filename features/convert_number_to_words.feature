@@ -42,6 +42,15 @@ Feature: Convert number to words
     Then the output should contain exactly "<String Representation>"
 
     Examples:
-      | Amount | String Representation         |
-      | 100.00 | One hundred and 00/100 dollars |
-      
+      | Amount | String Representation                      |
+      | 100.00 | One hundred and 00/100 dollars             |
+      | 742.23 | Seven hundred forty-two and 23/100 dollars |
+
+
+  Scenario Outline: I'm a big spender!
+    When I run `convert <Amount>`
+    Then the output should contain exactly "<String Representation>"
+
+    Examples:
+      | Amount  | String Representation           |
+      | 1000.00 | One thousand and 00/100 dollars |     

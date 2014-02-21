@@ -3,7 +3,8 @@ module Convert
     def convert num
       whole = WholePart.new num
       cents = FractionalPart.new num
-      "#{whole.word} and #{cents.fraction} dollars".capitalize
+      result = "#{whole.word} and #{cents.fraction} dollars".capitalize
+      result = result.gsub /zero /, ''
     end
   end
 
@@ -37,7 +38,7 @@ module Convert
       1 => "ten",
       2 => "twenty",
       3 => "thirty",
-      4 => "fourty",
+      4 => "forty",
       5 => "fifty",
       6 => "sixty",
       7 => "seventy",
@@ -51,9 +52,13 @@ module Convert
     end
 
     def word
-      tens = (@whole / 10)
-      ones = (@whole % 10)
-      return word_decide(tens, ones)
+      result = ''
+      hundreds = (@whole / 100)
+      result = result.concat("#{word_decide 0, hundreds} hundred ") unless hundreds == 0
+      remainder = @whole % 100
+      tens = (remainder / 10)
+      ones = (remainder % 10)
+      return result.concat word_decide(tens, ones)
     end
 
     def word_decide tens, ones

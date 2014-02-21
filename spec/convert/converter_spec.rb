@@ -48,7 +48,7 @@ module Convert
         (WholePart.new '10.00').word.should eq 'ten'
         (WholePart.new '20.00').word.should eq 'twenty'
         (WholePart.new '30.00').word.should eq 'thirty'
-        (WholePart.new '40.00').word.should eq 'fourty'
+        (WholePart.new '40.00').word.should eq 'forty'
         (WholePart.new '50.00').word.should eq 'fifty'
         (WholePart.new '60.00').word.should eq 'sixty'
         (WholePart.new '70.00').word.should eq 'seventy'
@@ -70,6 +70,11 @@ module Convert
 
       it "returns 'tens & ones' hyphenated" do
         (WholePart.new '21.00').word.should eq 'twenty-one'
+      end
+
+      it "returns 'hundreds'" do
+        (WholePart.new '101.00').word.should eq 'one hundred one'
+        (WholePart.new '113.00').word.should eq 'one hundred thirteen'
       end
     end
   end
