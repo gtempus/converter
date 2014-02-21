@@ -2,4 +2,4 @@
 
 require_relative '../lib/convert'
 
-print (Converter.new).convert ARGV[0]
+print (Convert::Converter.new).convert ARGV[0]

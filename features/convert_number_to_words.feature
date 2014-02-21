@@ -8,11 +8,13 @@ Feature: Convert number to words
     Then the output should contain exactly "<String Representation>"
 
     Examples:
-      | Amount | String Representation   |
-      |    .00 | Zero and 00/100 dollars |
-      |   0    | Zero and 00/100 dollars |
-      |   0.00 | Zero and 00/100 dollars |
-      |   0.01 | Zero and 01/100 dollars |
-      |   1    | One and 00/100 dollars  |
-
+      | Amount | String Representation     |
+      |    .00 | Zero and 00/100 dollars   |
+      |    .01 | Zero and 01/100 dollars   |
+      |   0    | Zero and 00/100 dollars   |
+      |   0.00 | Zero and 00/100 dollars   |
+      |   0.01 | Zero and 01/100 dollars   |
+      |   1    | One and 00/100 dollars    |
+      |   1.10 | One and 10/100 dollars    |
+      |  11.00 | Eleven and 00/100 dollars |
 
