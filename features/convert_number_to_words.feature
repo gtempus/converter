@@ -8,6 +8,8 @@ Feature: Convert number to words
     Then the output should contain exactly "<String Representation>"
 
     Examples:
-      | Amount  | String Representation                                     |
-      | 2523.04 | Two thousand five hundred twenty-three and 04/100 dollars |
+      | Amount | String Representation   |
+      |    .00 | Zero and 00/100 dollars |
+      |   0.00 | Zero and 00/100 dollars |
+      |   0.01 | Zero and 01/100 dollars |
 

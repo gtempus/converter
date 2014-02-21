@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
-print "Two thousand five hundred twenty-three and 04/100 dollars"
+require_relative '../lib/convert'
+
+print (Converter.new).convert ARGV[0]
