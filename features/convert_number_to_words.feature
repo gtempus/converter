@@ -17,4 +17,6 @@ Feature: Convert number to words
       |   1    | One and 00/100 dollars    |
       |   1.10 | One and 10/100 dollars    |
       |  11.00 | Eleven and 00/100 dollars |
+      |  20.00 | Twenty and 00/100 dollars |      
+
 
