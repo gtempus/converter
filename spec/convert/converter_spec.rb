@@ -46,6 +46,14 @@ module Convert
 
       it "returns 'tens'" do
         (WholePart.new '10.00').word.should eq 'Ten'
+        (WholePart.new '20.00').word.should eq 'Twenty'
+        (WholePart.new '30.00').word.should eq 'Thirty'
+        (WholePart.new '40.00').word.should eq 'Fourty'
+        (WholePart.new '50.00').word.should eq 'Fifty'
+        (WholePart.new '60.00').word.should eq 'Sixty'
+        (WholePart.new '70.00').word.should eq 'Seventy'
+        (WholePart.new '80.00').word.should eq 'Eighty'
+        (WholePart.new '90.00').word.should eq 'Ninety'
       end
 
       it "returns 'teens'" do
