@@ -1,5 +1,7 @@
 class Converter
   def convert num
-    "Zero and 00/100 dollars" if num.to_f == 0.00
+    amount = num.match /^\d*\.?(\d{2})$/
+    cents = amount ? amount[1] : '00'
+    "Zero and #{cents}/100 dollars"
   end
 end

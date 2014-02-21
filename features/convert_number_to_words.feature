@@ -10,6 +10,9 @@ Feature: Convert number to words
     Examples:
       | Amount | String Representation   |
       |    .00 | Zero and 00/100 dollars |
+      |   0    | Zero and 00/100 dollars |
       |   0.00 | Zero and 00/100 dollars |
       |   0.01 | Zero and 01/100 dollars |
+      |   1    | One and 00/100 dollars  |
+
 
