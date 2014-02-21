@@ -32,40 +32,44 @@ module Convert
   describe WholePart do
     describe "#word" do
       it "returns 'ones'" do
-        (WholePart.new '0.00').word.should eq 'Zero'
-        (WholePart.new '1.00').word.should eq 'One'        
-        (WholePart.new '2.00').word.should eq 'Two'
-        (WholePart.new '3.00').word.should eq 'Three'
-        (WholePart.new '4.00').word.should eq 'Four'
-        (WholePart.new '5.00').word.should eq 'Five'
-        (WholePart.new '6.00').word.should eq 'Six'
-        (WholePart.new '7.00').word.should eq 'Seven'
-        (WholePart.new '8.00').word.should eq 'Eight'
-        (WholePart.new '9.00').word.should eq 'Nine'
+        (WholePart.new '0.00').word.should eq 'zero'
+        (WholePart.new '1.00').word.should eq 'one'        
+        (WholePart.new '2.00').word.should eq 'two'
+        (WholePart.new '3.00').word.should eq 'three'
+        (WholePart.new '4.00').word.should eq 'four'
+        (WholePart.new '5.00').word.should eq 'five'
+        (WholePart.new '6.00').word.should eq 'six'
+        (WholePart.new '7.00').word.should eq 'seven'
+        (WholePart.new '8.00').word.should eq 'eight'
+        (WholePart.new '9.00').word.should eq 'nine'
       end
 
       it "returns 'tens'" do
-        (WholePart.new '10.00').word.should eq 'Ten'
-        (WholePart.new '20.00').word.should eq 'Twenty'
-        (WholePart.new '30.00').word.should eq 'Thirty'
-        (WholePart.new '40.00').word.should eq 'Fourty'
-        (WholePart.new '50.00').word.should eq 'Fifty'
-        (WholePart.new '60.00').word.should eq 'Sixty'
-        (WholePart.new '70.00').word.should eq 'Seventy'
-        (WholePart.new '80.00').word.should eq 'Eighty'
-        (WholePart.new '90.00').word.should eq 'Ninety'
+        (WholePart.new '10.00').word.should eq 'ten'
+        (WholePart.new '20.00').word.should eq 'twenty'
+        (WholePart.new '30.00').word.should eq 'thirty'
+        (WholePart.new '40.00').word.should eq 'fourty'
+        (WholePart.new '50.00').word.should eq 'fifty'
+        (WholePart.new '60.00').word.should eq 'sixty'
+        (WholePart.new '70.00').word.should eq 'seventy'
+        (WholePart.new '80.00').word.should eq 'eighty'
+        (WholePart.new '90.00').word.should eq 'ninety'
       end
 
       it "returns 'teens'" do
-        (WholePart.new '11.00').word.should eq 'Eleven'
-        (WholePart.new '12.00').word.should eq 'Twelve'
-        (WholePart.new '13.00').word.should eq 'Thirteen'
-        (WholePart.new '14.00').word.should eq 'Fourteen'
-        (WholePart.new '15.00').word.should eq 'Fifteen'
-        (WholePart.new '16.00').word.should eq 'Sixteen'
-        (WholePart.new '17.00').word.should eq 'Seventeen'
-        (WholePart.new '18.00').word.should eq 'Eighteen'
-        (WholePart.new '19.00').word.should eq 'Nineteen'
+        (WholePart.new '11.00').word.should eq 'eleven'
+        (WholePart.new '12.00').word.should eq 'twelve'
+        (WholePart.new '13.00').word.should eq 'thirteen'
+        (WholePart.new '14.00').word.should eq 'fourteen'
+        (WholePart.new '15.00').word.should eq 'fifteen'
+        (WholePart.new '16.00').word.should eq 'sixteen'
+        (WholePart.new '17.00').word.should eq 'seventeen'
+        (WholePart.new '18.00').word.should eq 'eighteen'
+        (WholePart.new '19.00').word.should eq 'nineteen'
+      end
+
+      it "returns 'tens & ones' hyphenated" do
+        (WholePart.new '21.00').word.should eq 'twenty-one'
       end
     end
   end

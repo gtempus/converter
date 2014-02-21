@@ -3,54 +3,70 @@ module Convert
     def convert num
       whole = WholePart.new num
       cents = FractionalPart.new num
-      "#{whole.word} and #{cents.fraction} dollars"
+      "#{whole.word} and #{cents.fraction} dollars".capitalize
     end
   end
 
   class WholePart
+    ONES_GROUP = {
+      0 => "zero",
+      1 => "one",
+      2 => "two",
+      3 => "three",
+      4 => "four",
+      5 => "five",
+      6 => "six",
+      7 => "seven",
+      8 => "eight",
+      9 => "nine"
+    }
+
+    TEENS_GROUP = {
+      1 => "eleven",
+      2 => "twelve",
+      3 => "thirteen",
+      4 => "fourteen",
+      5 => "fifteen",
+      6 => "sixteen",
+      7 => "seventeen",
+      8 => "eighteen",
+      9 => "nineteen"
+    }
+
+    TENS_GROUP = {
+      1 => "ten",
+      2 => "twenty",
+      3 => "thirty",
+      4 => "fourty",
+      5 => "fifty",
+      6 => "sixty",
+      7 => "seventy",
+      8 => "eighty",
+      9 => "ninety"
+    }
+        
     def initialize full_amount
       maybe_whole = full_amount.match /^\d+/
       @whole = maybe_whole ? maybe_whole[0].to_i : 0
     end
 
     def word
-      tens = (@whole / 10).to_s
-      ones = (@whole % 10).to_s
+      tens = (@whole / 10)
+      ones = (@whole % 10)
+      return word_decide(tens, ones)
+    end
 
-      value = (tens + ones).to_i
-
-      tens_group = {
-        0 => "Zero",
-        1 => "One",
-        2 => "Two",
-        3 => "Three",
-        4 => "Four",
-        5 => "Five",
-        6 => "Six",
-        7 => "Seven",
-        8 => "Eight",
-        9 => "Nine",
-        10 => "Ten",
-        11 => "Eleven",
-        12 => "Twelve",
-        13 => "Thirteen",
-        14 => "Fourteen",
-        15 => "Fifteen",
-        16 => "Sixteen",
-        17 => "Seventeen",
-        18 => "Eighteen",
-        19 => "Nineteen",
-        20 => "Twenty",
-        30 => "Thirty",
-        40 => "Fourty",
-        50 => "Fifty",
-        60 => "Sixty",
-        70 => "Seventy",
-        80 => "Eighty",
-        90 => "Ninety"
-      }
-      
-      tens_group[value]
+    def word_decide tens, ones
+      if tens == 0
+        return ONES_GROUP[ones]
+      end
+      if ones == 0
+        return TENS_GROUP[tens]
+      end
+      if tens == 1 && ones > 0
+        return TEENS_GROUP[ones]
+      end
+      return "#{TENS_GROUP[tens]}-#{ONES_GROUP[ones]}"
     end
   end
 

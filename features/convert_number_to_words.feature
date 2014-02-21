@@ -35,3 +35,13 @@ Feature: Convert number to words
     Examples:
       | Amount | String Representation         |
       |  21.00 | Twenty-one and 00/100 dollars |
+
+      
+  Scenario Outline: I write checks between $100 and $999 inclusive
+    When I run `convert <Amount>`
+    Then the output should contain exactly "<String Representation>"
+
+    Examples:
+      | Amount | String Representation         |
+      | 100.00 | One hundred and 00/100 dollars |
+      
