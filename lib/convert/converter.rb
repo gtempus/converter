@@ -33,36 +33,48 @@ module Convert
 
     def word
       result = ''
-      thousands = (@whole / 1000)
-      tens = thousands / 10
-      ones = thousands % 10
-      result = result.concat("#{word_decide tens, ones} thousand ") unless thousands == 0
-      remainder = @whole % 1000
-      hundreds = (remainder / 100)
-      result = result.concat("#{word_decide 0, hundreds} hundred ") unless hundreds == 0
-      remainder = @whole % 100
-      tens = (remainder / 10)
-      ones = (remainder % 10)
-      tens_ones = word_decide(tens, ones)
-      if tens_ones == 'zero'
-        result = tens_ones if result.empty?
-      else
-        result = result.concat tens_ones
-      end
+      result = result.concat the_thousands
+      result = result.concat the_hundreds
+      result = result.concat the_rest unless !result.empty? && the_rest == 'zero'
       result.strip
     end
 
+    def the_thousands
+      thousands = (@whole / 1000) % 100
+      tens = thousands / 10
+      ones = thousands % 10
+      return "#{word_decide tens, ones} thousand " unless thousands == 0
+      ''
+    end
+
+    def the_hundreds
+      hundreds = (@whole / 100) % 10
+      tens = hundreds / 10
+      ones = hundreds % 10
+      return "#{word_decide tens, ones} hundred " unless hundreds == 0
+      ''
+    end
+
+    def the_rest
+      tens = (@whole / 10) % 10
+      ones = (@whole % 10)
+      word_decide(tens, ones)
+    end
+
     def word_decide tens, ones
+      return '' if tens > 9 || ones > 9
       if tens == 0
         return WORD_FOR[ones][AS_ONE]
       end
       if ones == 0
         return WORD_FOR[tens][AS_TEN]
       end
-      if tens == 1 && ones > 0
-        return WORD_FOR[ones][AS_TEEN]
-      end
+      return WORD_FOR[ones][AS_TEEN] if teen? (tens.to_i*10 + ones.to_i)
       return "#{WORD_FOR[tens][AS_TEN]}-#{WORD_FOR[ones][AS_ONE]}"
+    end
+
+    def teen? value
+      value > 10 && value < 20
     end
   end
 
