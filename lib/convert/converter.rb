@@ -4,7 +4,6 @@ module Convert
       whole = WholePart.new num
       cents = FractionalPart.new num
       result = "#{whole.word} and #{cents.fraction} dollars".capitalize
-      result = result.gsub /zero /, ''
     end
   end
 
@@ -16,7 +15,7 @@ module Convert
     private
     def GroupParser.split_into_groups num
       groups = ((num.reverse).split /(...)/).reject { |group| group.empty? }
-      groups.map { |group| group.reverse }.map { |group| '%03i' % group.to_i }.reverse
+      groups.map { |group| group.reverse }.map { |group| '%03i' % group.to_i }
     end
 
     def GroupParser.split_each_group_into_units groups
@@ -30,7 +29,6 @@ module Convert
     AS_TEN = 2
     
     WORD_FOR = {
-      0 => ['zero', nil, nil],
       1 => ['one', 'eleven', 'ten'],
       2 => ['two', 'twelve', 'twenty'],
       3 => ['three', 'thirteen', 'thirty'],
@@ -49,36 +47,18 @@ module Convert
 
     def word
       result = ''
-      result = result.concat the_thousands
-      result = result.concat the_hundreds
-      result = result.concat the_rest unless !result.empty? && the_rest == 'zero'
-      result.strip
-    end
-
-    def the_thousands
-      thousands = (@whole / 1000) % 100
-      tens = thousands / 10
-      ones = thousands % 10
-      return "#{word_decide tens, ones} thousand " unless thousands == 0
-      ''
-    end
-
-    def the_hundreds
-      hundreds = (@whole / 100) % 10
-      tens = hundreds / 10
-      ones = hundreds % 10
-      return "#{word_decide tens, ones} hundred " unless hundreds == 0
-      ''
-    end
-
-    def the_rest
-      tens = (@whole / 10) % 10
-      ones = (@whole % 10)
-      word_decide(tens, ones)
+      (["","thousand"].zip(GroupParser.parse @whole.to_s)).compact.each do | group |
+        break if group[1] == nil
+        result = result.prepend "#{word_decide(group[1][1], group[1][2])} #{group[0]} "
+        result = result.prepend("#{WORD_FOR[group[1][0]][AS_ONE]} hundred ") unless group[1][0] == 0
+      end
+      result.strip!
+      result = 'zero' if result.empty?
+      result
     end
 
     def word_decide tens, ones
-      return '' if tens > 9 || ones > 9
+      return '' if tens == 0 && ones == 0
       if tens == 0
         return WORD_FOR[ones][AS_ONE]
       end
