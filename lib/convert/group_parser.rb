@@ -1,18 +1,21 @@
 module Convert
   class GroupParser
     def GroupParser.parse num
-      groups = split_into_groups num
-      split_each_group_into_units groups
+      split groups_from num
     end
     
     private
-    def GroupParser.split_into_groups num
-      groups = ((num.reverse).split /(...)/).reject { |group| group.empty? }
-      groups.map { |group| group.reverse }.map { |group| '%03i' % group.to_i }
+    def GroupParser.groups_from num
+      num.reverse.split(/(...)/).reject(&:empty?)
+                                .map { |group| zero_pad group }
     end
 
-    def GroupParser.split_each_group_into_units groups
-      groups.map { |group| (group.split(%r{\s*})).map { |digit_char| digit_char.to_i }}
+    def GroupParser.zero_pad group
+      '%03i' % group.reverse.to_i
+    end
+
+    def GroupParser.split groups
+      groups.map { |group| group.split(//).map(&:to_i) }
     end
   end
 end

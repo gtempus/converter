@@ -59,7 +59,7 @@ Feature: Convert number to words
       | 387456.42 | Three hundred eighty-seven thousand four hundred fifty-six and 42/100 dollars | 
 
 
-  Scenario Outline: I'm a millionare
+  Scenario Outline: I'm a millionaire
     When I run `convert <Amount>`
     Then the output should contain exactly "<String Representation>"
 

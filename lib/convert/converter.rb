@@ -6,7 +6,7 @@ module Convert
     def convert num
       whole = WholePart.new num
       cents = FractionalPart.new num
-      result = "#{whole.word} and #{cents.fraction} dollars".capitalize
+      "#{whole.word} and #{cents.fraction} dollars".capitalize
     end
   end
 end
