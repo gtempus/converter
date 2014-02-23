@@ -1,45 +1,6 @@
 require 'spec_helper'
 
 module Convert
-  describe Converter do
-    describe "#convert" do
-      it "converts the cents to a fraction" do
-        converter = Converter.new
-        converter.convert('0.00').should eq "Zero and 00/100 dollars"
-      end
-
-      it "converts ones" do
-        converter = Converter.new
-        converter.convert('1.00').should eq "One and 00/100 dollars"
-      end
-    end
-  end
-
-  describe FractionalPart do
-    describe "#write_cents string" do
-      it "returns the fractional money part" do
-        cents = FractionalPart.new '0.00'
-        cents.fraction.should eq '00/100'
-      end
-
-      it "appends 00/100 if there are no cents" do
-        cents = FractionalPart.new '0'
-        cents.fraction.should eq '00/100'
-      end
-    end
-  end
-
-  describe GroupParser do
-    it "splits number strings into groups of three" do
-      GroupParser.parse('1').should eq [[0, 0, 1]]
-      GroupParser.parse('99').should eq [[0, 9, 9]]
-      GroupParser.parse('100').should eq [[1, 0, 0]]
-      GroupParser.parse('499').should eq [[4, 9, 9]]
-      GroupParser.parse('3400').should eq [[4, 0, 0], [0, 0, 3]]
-      GroupParser.parse('123090').should eq [[0, 9, 0], [1, 2, 3]]
-    end
-  end
-
   describe WholePart do
     describe "#word" do
       it "returns 'ones'" do
@@ -91,6 +52,8 @@ module Convert
 
       it "returns 'thousands'" do
         (WholePart.new '1000.00').word.should eq 'one thousand'
+        (WholePart.new '91000.00').word.should eq 'ninety-one thousand'
+        (WholePart.new '642000.00').word.should eq 'six hundred forty-two thousand'
       end
     end
   end

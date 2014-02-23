@@ -54,5 +54,26 @@ Feature: Convert number to words
     Examples:
       | Amount    | String Representation                                                         |
       |   1000.00 | One thousand and 00/100 dollars                                               |
+      | 100000.00 | One hundred thousand and 00/100 dollars                                       |
       |  65289.99 | Sixty-five thousand two hundred eighty-nine and 99/100 dollars                |
-      | 387456.42 | Three hundred eighty-seven thousand four hundred fifty-six and 42/100 dollars |      
+      | 387456.42 | Three hundred eighty-seven thousand four hundred fifty-six and 42/100 dollars | 
+
+
+  Scenario Outline: I'm a millionare
+    When I run `convert <Amount>`
+    Then the output should contain exactly "<String Representation>"
+
+    Examples:
+      | Amount       | String Representation                                                                                |
+      |   1000000.00 | One million and 00/100 dollars                                                                       |
+      | 100000000.00 | One hundred million and 00/100 dollars                                                               |      
+      | 529360580.25 | Five hundred twenty-nine million three hundred sixty thousand five hundred eighty and 25/100 dollars |
+
+
+  Scenario Outline: I can buy small countries
+    When I run `convert <Amount>`
+    Then the output should contain exactly "<String Representation>"
+
+    Examples:
+      | Amount        | String Representation          |    
+      | 1000000000.00 | One billion and 00/100 dollars |
